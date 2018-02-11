@@ -6,6 +6,7 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import App from './App';
 import createStore from './createStore';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import './index.css';
 
 injectTapEventPlugin();
 

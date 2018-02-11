@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Card, CardActions, CardMedia, CardTitle} from 'material-ui/Card';
+import Button from 'material-ui/RaisedButton';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 export default class Ranking extends React.Component {
     componentWillMount() {
@@ -16,7 +19,7 @@ export default class Ranking extends React.Component {
 
         return (
             <div>
-                <h2>{
+                <h2 style={{ textAlign: 'center' }}>{
                     typeof category !== 'undefined'
                         ? `${category.name}のランキング`
                         : ''
@@ -27,16 +30,28 @@ export default class Ranking extends React.Component {
                     } else if (typeof ranking === 'undefined') {
                         return <p>読み込み中...</p>
                     } else {
-                        return (
-                            <ol>
-                                {ranking.map(item => (
-                                    <li key={`ranking-item-${item.code}`}>
-                                        <img alt={item.name} src={item.imageUrl} />
-                                        <a href={item.url} target="_blank">{item.name}</a>
-                                    </li>
-                                ))}
-                            </ol>
-                        );
+                        return ranking.map((item, i) => (
+                            <MuiThemeProvider>
+                                <Card
+                                    key={`ranking-item-${item.code}`}
+                                    style={{ maxWidth:'500px', margin: '32px auto' }}
+                                >
+                                    <CardMedia>
+                                        <img src={item.imageUrl} alt="" />
+                                    </CardMedia>
+                                    <CardTitle title={`${i + 1}位  ${item.name}`} />
+                                    <CardActions>
+                                        <Button
+                                            fullWidth
+                                            href={item.url}
+                                            primary
+                                            labelColor="#fff"
+                                            label="購入ページ"
+                                        />
+                                    </CardActions>
+                                </Card>
+                            </MuiThemeProvider>
+                                ));
                     }
                 })()}
             </div>

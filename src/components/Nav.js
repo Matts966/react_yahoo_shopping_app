@@ -17,11 +17,13 @@ export default function Nav({ categories, onClick, onToggle, open }) {
                 <AppBar
                     title="Yahoo Shopping Ranking"
                     onLeftIconButtonClick={ () => onToggle(open) }
+                    style={{ position: 'fixed' }}
                 />
                 <Drawer
                     docked={false}
                     open={open}
                     onRequestChange={() => onToggle(open)}
+                    style={{ paddingTop: 64 }}
                 >
                     {categories.map(category => (
                         <ListItem
