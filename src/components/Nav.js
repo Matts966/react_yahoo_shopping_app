@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { AppBar, ListItem, Drawer } from 'material-ui';
 
-export default function Nav({ categories }) {
+
+export default function Nav({ categories, onClick, onToggle, open }) {
     const to = category => (
         category.id === '1'
             ? '/all'
@@ -10,15 +12,29 @@ export default function Nav({ categories }) {
     );
 
     return (
-        <ul>
-            {categories.map(category => (
-                <li key={`nav-item-${category.id}`}>
-                    <Link to={to(category)}>
-                        {category.name}
-                    </Link>
-                </li>
-            ))}
-        </ul>
+        <MuiThemeProvider>
+            <div>
+                <AppBar
+                    title="Yahoo Shopping Ranking"
+                    onLeftIconButtonClick={ () => onToggle(open) }
+                />
+                <Drawer
+                    docked={false}
+                    open={open}
+                    onRequestChange={() => onToggle(open)}
+                >
+                    {categories.map(category => (
+                        <ListItem
+                            button
+                            key={`list-item-${category.id}`}
+                            onClick={() => onClick(to(category))}
+                        >
+                            {category.name}
+                        </ListItem>
+                    ))}
+                </Drawer>
+            </div>
+        </MuiThemeProvider>
     );
 }
 Nav.propTypes = {
@@ -27,8 +43,12 @@ Nav.propTypes = {
             id: PropTypes.string.isRequired,
             name: PropTypes.string.isRequired
         })
-    ).isRequired
+    ).isRequired,
+    onClick: PropTypes.func.isRequired,
+    onToggle: PropTypes.func.isRequired,
+    open: PropTypes.bool.isRequired
 };
 Nav.defaultProps = {
-    categories: []
+    categories: [],
+    open: false
 };

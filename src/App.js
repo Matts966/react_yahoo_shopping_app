@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Ranking from './containers/Ranking'
-import Nav from './containers/Nav'
+import Nav from './containers/Nav';
+
 
 class App extends Component {
+  handleToggle() {
+      this.setState({
+          open: !this.state.open
+      })
+  }
   render() {
     return (
       <div className="App">
-        <Nav />
+        <Nav/>
 
         <Switch>
             <Route path="/all" component={Ranking} />
@@ -26,5 +32,6 @@ class App extends Component {
     );
   }
 }
+
 
 export default App;
